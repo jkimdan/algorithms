@@ -144,4 +144,4 @@ def compare_with_theory(algo, theo, max_size=500, resolution=1):
     plt.show()
     
 if __name__ == "__main__": 
-    pass
+    print(check_validity(mergesort))

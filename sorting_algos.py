@@ -34,5 +34,49 @@ def selectionsort(A):
         A[j-1], A[max_idx] = A[max_idx],A[j-1]
     return A
 
+def partition(A, left_idx, right_idx):
+# initial pivot target idx
+    target_idx = left_idx
+    # pivot value for comparison
+    pivot_value = A[right_idx]
+    # traverse the array and partition values 
+    for i in range(left_idx, right_idx):
+        if A[i] < pivot_value: 
+            A[i], A[target_idx] = A[target_idx], A[i]
+            target_idx += 1
+    # place pivot into target position
+    A[right_idx], A[target_idx] = A[target_idx], A[right_idx]
+    return target_idx
+
+def quicksort(A, left, right):
+    # base case: continue until indices cross
+    if left >= right:
+        return A
+    p = partition(A, left, right)
+    # sort left side of p
+    quicksort(A, left, p-1)
+    #sort right side of p
+    quicksort(A, p+1, right)
+
+def quicksort_test(A):
+    quicksort(A, 0, len(A) - 1)
+    return A
+
+def merge(A, B):
+    if not A or not B:
+        return A or B
+    else:
+        if A[0] >= B[0]:
+            return B[0] + merge(A, B[1:])
+        if A[0] < B[0]:
+            return A[0] + merge(A[1:], B[1:])        
+
+def mergesort(A):
+    if len(A) > 1: 
+        mid = len(A) // 2
+        return merge(mergesort(A[:mid]), mergesort(A[mid:]))
+    else:
+        return A    
+
 if __name__ == "__main__":
     pass
