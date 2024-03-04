@@ -1,4 +1,5 @@
 from sorting_algos import  *
+import math
 
 def is_sorted(A):
     for i in range(1, len(A)):
@@ -64,7 +65,7 @@ def compare_worst(*algos, max_size=400, trials=100):
     fig, ax = plt.subplots()
     for i, algo in enumerate(algos):
         ax.plot(x_axis, worst_times[i], label = f"{algo.__name__}")
-    ax.set_title("Worst-Case comparison")
+    ax.set_title(f"Worst-Case comparison, trials={trials}")
     ax.set_xlabel("List size")
     ax.set_ylabel("Runtime in seconds")
     ax.legend()
@@ -78,8 +79,10 @@ def compare_average(*algos, max_size=400, trials=100):
             times = []
             for j in range(trials):
                 rand_nums = np.random.randint(1000, size=i)
+                #sorta_sorted = make_sorta_sorted(i, 0.1)
                 t1_start = perf_counter()
                 algo(list(rand_nums))
+                #algo(list(sorta_sorted))
                 t1_stop = perf_counter()
                 times.append(t1_stop-t1_start)
 
@@ -88,7 +91,7 @@ def compare_average(*algos, max_size=400, trials=100):
     fig, ax = plt.subplots()
     for i, algo in enumerate(algos):
         ax.plot(x_axis, average_times[i], label = f"{algo.__name__}")
-    ax.set_title("Average runtime comparison")
+    ax.set_title(f"Average runtime comparison, trials={trials}")
     ax.set_xlabel("List size")
     ax.set_ylabel("Runtime in seconds")
     ax.legend()
@@ -112,7 +115,7 @@ def compare_best(*algos, max_size=400, trials=100):
     fig, ax = plt.subplots()
     for i, algo in enumerate(algos):
         ax.plot(x_axis, best_times[i], label = f"{algo.__name__}")
-    ax.set_title("Best runtime comparison")
+    ax.set_title(f"Best runtime comparison")
     ax.set_xlabel("List size")
     ax.set_ylabel("Runtime in seconds")
     ax.legend()
@@ -144,4 +147,4 @@ def compare_with_theory(algo, theo, max_size=500, resolution=1):
     plt.show()
     
 if __name__ == "__main__": 
-    print(check_validity(mergesort))
+    pass

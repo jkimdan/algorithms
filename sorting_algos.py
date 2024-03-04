@@ -76,7 +76,79 @@ def mergesort(A):
         mid = len(A) // 2
         return merge(mergesort(A[:mid]), mergesort(A[mid:]))
     else:
-        return A    
+        return A 
+
+# array A has n unique integers
+def find_pairs_bf(A):
+    pair_count = 0
+    for val in A:
+        for val2 in A: 
+            if val ** 2 == val2:
+                pair_count += 1
+    return pair_count
+
+# [2,3,4,5,6,7,12,16,25,144]
+def find_pairs_2pointer(A):
+    sorted_nums = quicksort_test(A)
+    pointer = 0
+    pointer2 = 1
+    count = 0
+    while pointer2 < len(sorted_nums):
+        sqr = sorted_nums[pointer] ** 2
+        if sqr == sorted_nums[pointer2]:
+            count += 1
+            pointer += 1
+        elif sqr < sorted_nums[pointer2]:
+            pointer += 1
+        else: 
+            pointer2 += 1
+
+    return count
+
+def find_majority_bf(A):
+    for i in A:
+        count = 0
+        for j in A:
+            if i == j:
+                count += 1
+        if len(A) / 2 < count: 
+            return i
+    return -1
+
+def count_majority(A, element):
+    count = 0
+    for val in A:
+        if val == element:
+            count += 1
+    return count
+
+def find_majority_dnc(A):
+    # base case
+    if len(A) == 1:
+        return A[0]
+    
+    # find the majority of the left and right sides
+    middle = len(A) // 2
+    left = find_majority_dnc(A[:middle])
+    right = find_majority_dnc(A[middle:])
+
+    # if the left and the right side majority are the same,
+    # then the majority is the found value
+    if left == right:
+        return left
+    
+    # if not, must determine which majority occurs more, meaning
+    # the majority for the combined sides is the majority with more
+    # occurrences. This occurs in O(n) time.
+    left_count = count_majority(A, left)
+    right_count = count_majority(A, right)
+
+    if left_count > middle:
+        return left
+    elif right_count > middle:
+        return right
+    else: 
+        return -1
 
 if __name__ == "__main__":
     pass
