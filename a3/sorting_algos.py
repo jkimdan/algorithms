@@ -1,41 +1,3 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from time import perf_counter
-from math import log, sqrt
-import random
-
-def bubblesort(A):
-    n = len(A)
-    for i in range(n):
-        swapped = False
-        for j in range(0,n-i-1):
-            if A[j] > A[j+1]:
-                A[j],A[j+1] = A[j+1],A[j]
-                swapped = True
-        if swapped == False: break
-    return A
-
-def insertionsort(A):
-    n = len(A)
-    for i in range(1, n):
-        key = A[i]
-        j = i-1
-        while j >=0 and key < A[j]:
-            A[j+1] = A[j]
-            j -= 1
-        A[j+1] = key
-    return A
-
-def selectionsort(A):
-    n = len(A)
-    for j in range(n,1,-1):
-        max_idx = 0
-        for i in range(j):
-            if A[i] > A[max_idx]:
-                max_idx = i
-        A[j-1], A[max_idx] = A[max_idx],A[j-1]
-    return A
-
 def partition(A, left_idx, right_idx):
 # initial pivot target idx
     target_idx = left_idx
@@ -69,9 +31,9 @@ def merge(A, B):
         return A or B
     else:
         if A[0] >= B[0]:
-            return [B[0]] + merge(A, B[1:])
+            return B[0] + merge(A, B[1:])
         if A[0] < B[0]:
-            return [A[0]] + merge(A[1:], B)        
+            return A[0] + merge(A[1:], B[1:])        
 
 def mergesort(A):
     if len(A) > 1: 
@@ -79,7 +41,7 @@ def mergesort(A):
         return merge(mergesort(A[:mid]), mergesort(A[mid:]))
     else:
         return A 
-    
+
 # array A has n unique integers
 def find_pairs_bf(A):
     pair_count = 0
@@ -152,7 +114,4 @@ def find_majority_dnc(A):
         return -1
 
 if __name__ == "__main__":
-    nums = []
-    for i in range(30):
-        nums.append(random.randint(1,100))
-    print(mergesort(nums))
+    pass
